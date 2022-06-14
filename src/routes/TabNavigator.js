@@ -3,6 +3,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { BackHeader, TabBar } from "components";
 import SCREENS_NAME from "constants/screens";
 import React from "react";
+import DetailInvoicesScreen from "screens/detailInvoices";
 import HomeScreen from "screens/home";
 import ListInvoicesScreen from "screens/list";
 
@@ -32,10 +33,10 @@ function TabStack() {
   return (
     <Tab.Navigator
       tabBar={props => <TabBar {...props} />}
-      initialRouteName={SCREENS_NAME.HOME_STACK_SCREEN}
+      initialRouteName={SCREENS_NAME.LIST_INVOICES_SCREEN}
     >
       <Tab.Screen
-        name={SCREENS_NAME.QUIZ_SCREEN}
+        name={SCREENS_NAME.LIST_INVOICES_SCREEN}
         component={ListInvoicesScreen}
         options={{
           tabBarLabel: "LIST",
@@ -71,8 +72,13 @@ export const AppStackScreen = () => {
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name={SCREENS_NAME.QUIZ_SCREEN}
+        name={SCREENS_NAME.LIST_INVOICES_SCREEN}
         component={ListInvoicesScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name={SCREENS_NAME.DETAIL_INVOICES_SCREEN}
+        component={DetailInvoicesScreen}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

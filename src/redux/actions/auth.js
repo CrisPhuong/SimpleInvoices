@@ -1,19 +1,19 @@
 import { AUTH } from "actionsType";
 
-export const loginWithGoogleHandle = ({ params, success, failure }) => ({
-  type: AUTH.LOGIN_WITH_GOOGLE.HANDLER,
+export const loginHandle = ({ params, success, failure }) => ({
+  type: AUTH.LOGIN.HANDLER,
   payload: params,
   success,
   failure,
 });
 
-export const loginWithGoogleSuccess = payload => ({
-  type: AUTH.LOGIN_WITH_GOOGLE.SUCCESS,
+export const loginSuccess = payload => ({
+  type: AUTH.LOGIN.SUCCESS,
   payload,
 });
 
-export const loginWithGoogleFailure = payload => ({
-  type: AUTH.LOGIN_WITH_GOOGLE.FAILURE,
+export const loginFailure = payload => ({
+  type: AUTH.LOGIN.FAILURE,
   payload,
 });
 

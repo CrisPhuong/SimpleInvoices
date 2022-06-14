@@ -7,13 +7,16 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { scale } from "utils/responsive";
 
 const InvoicesItem = props => {
-  const { data } = props;
+  const { data, navigation } = props;
 
   return (
-    <View style={styles.container}>
+    <TouchableOpacity
+      onPress={() => navigation.navigate("DetailInvoices", data)}
+      style={styles.container}
+    >
       <Text>{data?.description}</Text>
       <Text>TotalAmount:{data?.totalAmount}</Text>
-    </View>
+    </TouchableOpacity>
   );
 };
 

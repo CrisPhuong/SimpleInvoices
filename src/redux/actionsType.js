@@ -28,7 +28,7 @@ export const ERROR = {
 };
 
 export const AUTH = {
-  LOGIN_WITH_GOOGLE: asyncTypes("AUTH/LOGIN_WITH_GOOGLE"),
+  LOGIN: asyncTypes("AUTH/LOGIN"),
   GET_USER_PROFILE: asyncTypes("AUTH/GET_USER_PROFILE"),
 };
 

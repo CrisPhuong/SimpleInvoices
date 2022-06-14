@@ -52,7 +52,6 @@ export function* getListInvoices({ payload, success, failure }) {
 }
 
 export function* createInvoices({ payload, success, failure }) {
-  console.log("payloadpayloadpayload", payload);
   try {
     const data = yield call(apiCreateInvoices, payload);
     if (data?.status === 200) {

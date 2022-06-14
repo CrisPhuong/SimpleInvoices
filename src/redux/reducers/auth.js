@@ -7,7 +7,7 @@ const initialState = {
 
 const auth = (state = initialState, action) => {
   switch (action.type) {
-    case AUTH.LOGIN_WITH_GOOGLE.SUCCESS:
+    case AUTH.LOGIN.SUCCESS:
       const { access_token } = action.payload;
       return {
         ...state,

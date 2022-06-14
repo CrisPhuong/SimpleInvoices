@@ -7,14 +7,14 @@ export const getListInvoicesHandler = ({ params, success, failure }) => ({
   failure,
 });
 
-export const getListInvoicesSuccess = payload => ({
+export const getListInvoicesSuccess = params => ({
   type: INVOICES.GET_LIST_INVOICES.SUCCESS,
-  payload,
+  payload: params,
 });
 
-export const getListInvoicesFailure = payload => ({
+export const getListInvoicesFailure = params => ({
   type: INVOICES.GET_LIST_INVOICES.FAILURE,
-  payload,
+  payload: params,
 });
 
 export const createInvoicesHandler = ({ params, success, failure }) => ({

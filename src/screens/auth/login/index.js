@@ -1,11 +1,12 @@
-import { loginWithGoogleHandle } from "actions/auth";
+import React, { useCallback, useEffect } from "react";
+import { getUserProfileHandle, loginHandle } from "actions/auth";
 import CustomButton from "components/CustomButton";
 import CustomInput from "components/CustomInput";
 import { CUSTOM_COLOR } from "constants/colors";
 import { SIZE } from "constants/size";
-import React, { useCallback, useEffect } from "react";
 import { SafeAreaView, StyleSheet, View } from "react-native";
 import { useDispatch } from "react-redux";
+import { useFormInput } from "src/hooks/useFormInput";
 import { scale } from "utils/responsive";
 import TextRow from "../components/TextRow";
 
@@ -13,13 +14,18 @@ const Login = props => {
   const {} = props;
 
   const dispatch = useDispatch();
+  const userNameInput = useFormInput("");
+  const passwordInput = useFormInput("");
 
   const onGoogleLogin = useCallback(() => {
     dispatch(
-      loginWithGoogleHandle({
+      loginHandle({
         params: {
+          // username: userNameInput?.value,
+          // password: passwordInput?.value,
           username: "dung+octopus4@101digital.io",
           password: "Abc@123456",
+
           client_id: "oO8BMTesSg9Vl3_jAyKpbOd2fIEa",
           client_secret: "0Exp4dwqmpON_ezyhfm0o_Xkowka",
           grant_type: "password",
@@ -31,7 +37,7 @@ const Login = props => {
         },
       })
     );
-  }, [dispatch]);
+  }, [dispatch, userNameInput, passwordInput]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -47,6 +53,7 @@ const Login = props => {
           placeholder={"Username"}
           style={styles.inputContainer}
           customInputContainerStyle={styles.questionInput}
+          {...userNameInput}
         />
         <CustomInput
           multiple
@@ -54,6 +61,7 @@ const Login = props => {
           placeholder={"Password"}
           style={styles.inputContainer}
           customInputContainerStyle={styles.questionInput}
+          {...passwordInput}
         />
         <CustomButton
           style={styles.createButton}

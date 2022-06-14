@@ -1,4 +1,3 @@
-import { getUserProfileHandle } from "actions/auth";
 import { createInvoicesHandler } from "actions/listInvoices";
 import CustomButton from "components/CustomButton";
 import CustomInput from "components/CustomInput";
@@ -6,7 +5,7 @@ import { FONT_FAMILY, FONT_SIZE, LINE_HEIGHT } from "constants/appFonts";
 import { CUSTOM_COLOR } from "constants/colors";
 import { SIZE } from "constants/size";
 import moment from "moment";
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback } from "react";
 import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { useFormInput } from "src/hooks/useFormInput";
@@ -14,10 +13,6 @@ import { useFormInput } from "src/hooks/useFormInput";
 const HomeScreen = props => {
   const dispatch = useDispatch();
   const { userInfo } = useSelector(state => state.auth);
-
-  useEffect(() => {
-    dispatch(getUserProfileHandle({ success: () => {}, failure: () => {} }));
-  }, [dispatch]);
 
   const refInput = useFormInput("");
   const descriptionInput = useFormInput("");

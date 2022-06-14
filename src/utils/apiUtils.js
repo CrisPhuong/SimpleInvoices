@@ -12,7 +12,6 @@ axios.defaults.headers.post["Content-Type"] = "application/json";
 axios.interceptors.request.use(
   async config => {
     let token = await AsyncStorage.getItem("ACCESS_TOKEN");
-    console.log("tokentokentokentoken", token);
     !token ? (token = store?.getState()?.auth?.accessToken) : null;
 
     if (token && skipTokenUrl.indexOf(config.url) === -1) {
@@ -20,7 +19,6 @@ axios.interceptors.request.use(
     } else {
       config.headers.authorization = null;
     }
-    console.log("configconfigconfigconfigconfig", config);
     return config;
   },
   error => {
@@ -90,10 +88,10 @@ export default class APIUtils {
     );
   }
 
-  static post(uri, postData, headers) {
+  static post(uri, body, headers) {
     return new Promise((resolve, reject) => {
       axios
-        .post(uri, postData, {
+        .post(uri, body, {
           timeout: REQUEST_TIMEOUT,
           headers: {
             "Content-type": "application/json",

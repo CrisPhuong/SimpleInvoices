@@ -2,8 +2,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   getUserProfileFailure,
   getUserProfileSuccess,
-  loginWithGoogleFailure,
-  loginWithGoogleSuccess,
+  loginFailure,
+  loginSuccess,
 } from "actions/auth";
 import { API_URL } from "constants/apiUrl";
 import { call, put } from "redux-saga/effects";
@@ -26,14 +26,14 @@ export function* getToken({ payload, success, failure }) {
 
     if (data?.status === 200) {
       yield AsyncStorage.setItem("ACCESS_TOKEN", data.data.access_token);
-      yield put(loginWithGoogleSuccess(data.data));
-      success && success();
+      yield put(loginSuccess(data.data));
+      success && success(data.data);
     } else {
-      yield put(loginWithGoogleFailure(data.response));
+      yield put(loginFailure(data.response));
       failure && failure(data.response);
     }
   } catch (error) {
-    yield put(loginWithGoogleFailure(error));
+    yield put(loginFailure(error));
     failure && failure(error);
   }
 }
@@ -41,8 +41,6 @@ export function* getToken({ payload, success, failure }) {
 export function* getUserProfile({ success, failure }) {
   try {
     const data = yield call(apiGetUserProfile);
-    console.log("data", data);
-
     if (data?.status === 200) {
       yield put(getUserProfileSuccess(data.data));
       success && success();

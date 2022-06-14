@@ -16,6 +16,7 @@ const CustomInput = props => {
           style={[styles.input, customInputContainerStyle]}
           placeholderTextColor={CUSTOM_COLOR.Navy03}
           multiline
+          autoCapitalize="none"
           autoCorrect={false}
           autoComplete={false}
           {...rest}
