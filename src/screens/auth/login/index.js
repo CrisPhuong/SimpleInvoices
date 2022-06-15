@@ -21,11 +21,8 @@ const Login = props => {
     dispatch(
       loginHandle({
         params: {
-          // username: userNameInput?.value,
-          // password: passwordInput?.value,
-          username: "dung+octopus4@101digital.io",
-          password: "Abc@123456",
-
+          username: userNameInput?.value,
+          password: passwordInput?.value,
           client_id: "oO8BMTesSg9Vl3_jAyKpbOd2fIEa",
           client_secret: "0Exp4dwqmpON_ezyhfm0o_Xkowka",
           grant_type: "password",
