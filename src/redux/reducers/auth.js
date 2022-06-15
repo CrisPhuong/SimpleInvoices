@@ -21,6 +21,13 @@ const auth = (state = initialState, action) => {
         userInfo: action.payload,
       };
 
+    case AUTH.LOGIN.FAILURE:
+      return {
+        ...state,
+        isLogin: false,
+        tokenInfo: {},
+      };
+
     default:
       return state;
   }

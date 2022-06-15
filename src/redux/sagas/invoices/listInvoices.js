@@ -27,7 +27,7 @@ export const apiCreateInvoices = params => {
   const { org_token } = params;
   return APIUtils.post(
     `https://sandbox.101digital.io/invoice-service/2.0.0/invoices`,
-    params,
+    JSON.stringify(params),
     {
       "org-token": org_token,
       "Operation-Mode": "SYNC",
@@ -54,12 +54,12 @@ export function* getListInvoices({ payload, success, failure }) {
 export function* createInvoices({ payload, success, failure }) {
   try {
     const data = yield call(apiCreateInvoices, payload);
-    if (data?.status === 200) {
+    if (data?.status === 201) {
       yield put(createInvoicesSuccess(data.data));
       success && success(data.data);
     } else {
-      yield put(createInvoicesFailure(data.response));
-      failure && failure(data.response);
+      yield put(createInvoicesFailure(data));
+      failure && failure(data);
     }
   } catch (error) {
     yield put(createInvoicesFailure(error));

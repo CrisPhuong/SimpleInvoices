@@ -1,29 +1,36 @@
+import { loginFailure } from "actions/auth";
 import { createInvoicesHandler } from "actions/listInvoices";
 import CustomButton from "components/CustomButton";
 import CustomInput from "components/CustomInput";
 import { FONT_FAMILY, FONT_SIZE, LINE_HEIGHT } from "constants/appFonts";
 import { CUSTOM_COLOR } from "constants/colors";
+import SCREENS_NAME from "constants/screens";
 import { SIZE } from "constants/size";
 import moment from "moment";
 import React, { useCallback } from "react";
-import { SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { Alert, SafeAreaView, StyleSheet, Text, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { useFormInput } from "src/hooks/useFormInput";
 
+const STATUS_TOKEN_EXPIRED = 401;
+
+const CREATE_INVOICES_FAIL = 400;
+
 const HomeScreen = props => {
+  const { navigation } = props || {};
   const dispatch = useDispatch();
   const { userInfo } = useSelector(state => state.auth);
 
-  const refInput = useFormInput("");
+  const referenceInput = useFormInput("");
   const descriptionInput = useFormInput("");
-  const amountInput = useFormInput("");
-  const dateInput = useFormInput(moment().format("DD/MM/YYYY"));
+  const quantityInput = useFormInput("");
+  const dateInput = useFormInput(moment().format("DD-MM-YYYY"));
 
   const onCreate = useCallback(() => {
     dispatch(
       createInvoicesHandler({
         params: {
-          listOfInvoices: [
+          invoices: [
             {
               bankAccount: {
                 bankId: "",
@@ -55,10 +62,10 @@ const HomeScreen = props => {
                   documentUrl: "http://url.com/#123",
                 },
               ],
-              invoiceReference: "#123456",
-              invoiceNumber: "INV123456701",
+              invoiceReference: referenceInput?.value,
+              invoiceNumber: referenceInput?.value,
               currency: "GBP",
-              invoiceDate: dateInput?.value,
+              invoiceDate: "2021-05-27",
               dueDate: "2021-06-04",
               description: descriptionInput?.value,
               customFields: [
@@ -83,10 +90,10 @@ const HomeScreen = props => {
               ],
               items: [
                 {
-                  itemReference: refInput?.value,
-                  description: descriptionInput?.value,
-                  quantity: amountInput?.value,
-                  rate: 1000,
+                  itemReference: "itemRef",
+                  description: "Honda RC150",
+                  quantity: quantityInput?.value,
+                  rate: 1,
                   itemName: "Honda Motor",
                   itemUOM: "KG",
                   customFields: [
@@ -116,14 +123,41 @@ const HomeScreen = props => {
           operation_Mode: "SYNC",
           org_token: userInfo?.data?.memberships?.[0]?.token,
         },
+        success: () => {
+          alert("Create Invoices Success");
+        },
+        failure: res => {
+          if (res?.status == STATUS_TOKEN_EXPIRED) {
+            Alert.alert("Create InVoices", "Token expired Pls login again", [
+              {
+                text: "OK",
+                onPress: () => {
+                  dispatch(loginFailure({ isExpired: true }));
+                },
+              },
+            ]);
+          }
+          if (res?.status == CREATE_INVOICES_FAIL) {
+            Alert.alert(
+              "Create InVoices",
+              "Create Invoices Fail Pls Create Again ",
+              [
+                {
+                  text: "OK",
+                  onPress: () => {},
+                },
+              ]
+            );
+          }
+        },
       })
     );
   }, [
-    amountInput?.value,
+    quantityInput?.value,
     dateInput?.value,
     descriptionInput?.value,
     dispatch,
-    refInput?.value,
+    referenceInput?.value,
     userInfo?.data?.memberships,
   ]);
 
@@ -138,7 +172,7 @@ const HomeScreen = props => {
         placeholder={"Reference"}
         style={styles.inputContainer}
         customInputContainerStyle={styles.questionInput}
-        {...refInput}
+        {...referenceInput}
       />
       <CustomInput
         multiple
@@ -159,11 +193,12 @@ const HomeScreen = props => {
       />
       <CustomInput
         multiple
-        label={"Amount"}
-        placeholder={"Amount"}
+        label={"Quantity"}
+        placeholder={"Quantity"}
         style={styles.inputContainer}
         customInputContainerStyle={styles.questionInput}
-        {...amountInput}
+        {...quantityInput}
+        keyboardType="numeric"
       />
       <CustomButton
         style={styles.containerButton}

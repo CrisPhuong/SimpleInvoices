@@ -168,12 +168,12 @@ const ListInvoices = props => {
   const handelSortByCreateAt = useCallback(() => {
     if (!!searchInput?.value) {
       const dataSortSearch = dataSearch.sort((a, b) => {
-        return moment(a?.createdAt) - moment(b?.createdAt);
+        return moment(b?.createdAt) - moment(a?.createdAt);
       });
       setDataSearch([...dataSortSearch]);
     } else {
       const arraySort = dataListInvoices.sort((a, b) => {
-        return moment(a?.createdAt) - moment(b?.createdAt);
+        return moment(b?.createdAt) - moment(a?.createdAt);
       });
       setDataListInvoices([...arraySort]);
     }
@@ -202,6 +202,7 @@ const ListInvoices = props => {
         onChangeText={handleSearch}
       />
       <FlatList
+        contentContainerStyle={styles.contentContainerStyle}
         keyExtractor={(item, index) => `ListInvoices${item?.invoiceId}`}
         data={!!searchInput?.value ? dataSearch : dataListInvoices}
         renderItem={renderItem}
@@ -278,5 +279,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     height: 30,
     borderRadius: 30,
+  },
+  contentContainerStyle: {
+    paddingBottom: 80,
   },
 });
