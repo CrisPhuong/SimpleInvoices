@@ -281,6 +281,6 @@ const styles = StyleSheet.create({
     borderRadius: 30,
   },
   contentContainerStyle: {
-    paddingBottom: 80,
+    paddingBottom: 90,
   },
 });
